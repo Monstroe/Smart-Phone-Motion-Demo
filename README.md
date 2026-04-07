@@ -1,2 +1,2 @@
-# Smart-Phone-Motion-Demo
+# Smart Phone Motion Demo
 Project for my Graduate Research Project
