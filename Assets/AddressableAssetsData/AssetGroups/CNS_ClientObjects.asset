@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CNS_ClientObjects
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: CNS_ClientObjects
+  m_GUID: 7b23ddb89b439b44895b8c8dae432b0b
+  m_SerializeEntries:
+  - m_GUID: 1d4642263d3a0b6488e6572799ba1f3e
+    m_Address: Assets/Prefabs/Objects/Client/ClientController.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CNS_ClientPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7847069604c8e91429e8fac63b117dfc
+    m_Address: Assets/Samples/CNetworkingSolution (CNS)/1.0.0/Player Sample/Prefabs/Client/ClientPlayer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CNS_ClientPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4dc85cdbb6aa493418b832214dfef962, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c8c3973cfe17e914fb3a584969fe6f19, type: 2}
+    - {fileID: 11400000, guid: b832b74cf76a7264b9417ac02e8af7c3, type: 2}
