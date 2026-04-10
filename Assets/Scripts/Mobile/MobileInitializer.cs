@@ -20,6 +20,7 @@ public class MobileInitializer : MonoBehaviour
         ClientManager.Instance.OnConnectionAccepted += OnConnectionAccepted;
         ClientManager.Instance.OnConnectionRejected += OnConnectionRejected;
         ClientManager.Instance.OnConnectionLost += OnConnectionLost;
+        ResetMenu();
     }
 
     void OnDestroy()

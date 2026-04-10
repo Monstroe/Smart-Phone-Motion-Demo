@@ -33,12 +33,13 @@ public enum ControllerCommandType : ushort
 
 public static class ControllerPacketBuilder
 {
-    public static NetPacket ControllerState(Quaternion rot, bool isHolding)
+    public static NetPacket ControllerState(Quaternion rot, bool isHolding, float holdY)
     {
         NetPacket packet = new NetPacket();
         packet.Write(ControllerCommandType.CONTROLLER_STATE);
         packet.Write(rot);
         packet.Write(isHolding);
+        packet.Write(holdY);
         return packet;
     }
 }

@@ -1,11 +1,14 @@
 using CNetworkingSolution;
 using UnityEngine;
+using TMPro;
 
 public class ClientController : ClientObject
 {
-    private Gyroscope gyro;
-    private Quaternion initialRotation;
+    private Quaternion calibration;
+    private Quaternion correctionQuaternion;
     private bool isCalibrated = false;
+
+    private HoldButton holdButton;
 
     [Header("Send Settings")]
     [SerializeField] private float sendRate = 60f; // Hz
@@ -27,14 +30,19 @@ public class ClientController : ClientObject
     protected override void StartOnOwner()
     {
         base.StartOnOwner();
+
+        Screen.orientation = ScreenOrientation.Portrait;
         if (!SystemInfo.supportsGyroscope)
         {
             Debug.LogError("Gyroscope not supported on this device!");
             return;
         }
+        Input.gyro.enabled = true;
+        calibration = Quaternion.identity;
+        correctionQuaternion = Quaternion.Euler(90f, 0f, 0f);
 
-        gyro = Input.gyro;
-        gyro.enabled = true;
+        holdButton = FindFirstObjectByType<HoldButton>();
+
         sendInterval = 1f / sendRate;
     }
 
@@ -42,26 +50,32 @@ public class ClientController : ClientObject
     {
         base.UpdateOnOwner();
 
-        if (!gyro.enabled) return;
+        if (!Input.gyro.enabled) return;
 
-        Quaternion deviceRotation = gyro.attitude;
-        deviceRotation *= Quaternion.Euler(90f, 0f, 180f);
+        Quaternion deviceRotation = GyroToUnity(Input.gyro.attitude);
+        Quaternion calculatedRotation = correctionQuaternion * deviceRotation;
 
         // Calibrate initial orientation (so "forward" feels natural)
-        /*if (!isCalibrated)
+        /*if (Input.touchCount > 0 && !isCalibrated)
         {
-            initialRotation = Quaternion.Inverse(deviceRotation);
+            Debug.Log("Calibrating Gyroscope...");
+            calibration = Quaternion.Inverse(calculatedRotation);
             isCalibrated = true;
-        }
+        }*/
 
-        Quaternion calibratedRotation = initialRotation * deviceRotation;*/
+        Quaternion finalRotation = calibration * calculatedRotation;
 
         timer += Time.deltaTime;
         if (timer >= sendInterval)
         {
             timer = 0f;
-            SendToServerObject(ControllerPacketBuilder.ControllerState(deviceRotation, Input.touchCount > 0), TransportMethod.Unreliable);
-            Debug.Log("Updating ClientController with Gyroscope data: " + deviceRotation.eulerAngles.ToString("F3") + " | " + deviceRotation.eulerAngles.ToString("F3"));
+            SendToServerObject(ControllerPacketBuilder.ControllerState(finalRotation, holdButton.IsHolding, holdButton.DeltaY / Screen.height), TransportMethod.Unreliable);
+            Debug.Log("Updating ClientController with Gyroscope data: " + finalRotation.eulerAngles.ToString("F3") + " | " + deviceRotation.eulerAngles.ToString("F3") + " | " + calibration.eulerAngles.ToString("F3"));
         }
+    }
+
+    private static Quaternion GyroToUnity(Quaternion q)
+    {
+        return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
 }
