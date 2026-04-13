@@ -6,7 +6,6 @@ public class ClientController : ClientObject
 {
     private Quaternion calibration;
     private Quaternion correctionQuaternion;
-    private bool isCalibrated = false;
 
     private HoldButton holdButton;
 
@@ -54,14 +53,6 @@ public class ClientController : ClientObject
 
         Quaternion deviceRotation = GyroToUnity(Input.gyro.attitude);
         Quaternion calculatedRotation = correctionQuaternion * deviceRotation;
-
-        // Calibrate initial orientation (so "forward" feels natural)
-        /*if (Input.touchCount > 0 && !isCalibrated)
-        {
-            Debug.Log("Calibrating Gyroscope...");
-            calibration = Quaternion.Inverse(calculatedRotation);
-            isCalibrated = true;
-        }*/
 
         Quaternion finalRotation = calibration * calculatedRotation;
 

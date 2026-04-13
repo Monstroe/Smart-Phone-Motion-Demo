@@ -11,9 +11,13 @@ public class MobileInitializer : MonoBehaviour
     [SerializeField] private GameObject calibrateMenu;
     [SerializeField] private GameObject gameMenu;
     [Space]
+    [SerializeField] private TMP_InputField ipInputField;
+    [Space]
     [SerializeField] private int lobbyId = 0;
     [SerializeField] private int calibrationTime = 5;
     [SerializeField] private TMP_Text calibrateText;
+
+    private string currentIp;
 
     void Start()
     {
@@ -21,6 +25,9 @@ public class MobileInitializer : MonoBehaviour
         ClientManager.Instance.OnConnectionRejected += OnConnectionRejected;
         ClientManager.Instance.OnConnectionLost += OnConnectionLost;
         ResetMenu();
+
+        currentIp = PlayerPrefs.GetString("LastUsedIP", "");
+        ipInputField.text = currentIp;
     }
 
     void OnDestroy()
@@ -41,8 +48,23 @@ public class MobileInitializer : MonoBehaviour
             LobbyConnectionType = LobbyConnectionType.JoinIfExists
         });
         ClientManager.Instance.RegisterTransport<CNetTransport>();
+        CNetTransport transport = FindFirstObjectByType<CNetTransport>();
+        transport.Address = currentIp != "" ? currentIp : transport.Address;
         ClientManager.Instance.StartTransport();
         mainMenu.SetActive(false);
+    }
+
+    public void SetIp()
+    {
+        string ip = ipInputField.text;
+        if (string.IsNullOrEmpty(ip))
+        {
+            Debug.LogError("IP address cannot be empty!");
+            return;
+        }
+
+        currentIp = ip;
+        PlayerPrefs.SetString("LastUsedIP", currentIp);
     }
 
     private void OnConnectionAccepted(ConnectionAcceptedArgs args)

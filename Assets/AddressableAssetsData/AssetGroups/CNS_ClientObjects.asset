@@ -21,12 +21,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - CNS_ClientPrefabs
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7847069604c8e91429e8fac63b117dfc
-    m_Address: Assets/Samples/CNetworkingSolution (CNS)/1.0.0/Player Sample/Prefabs/Client/ClientPlayer.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - CNS_ClientPrefabs
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4dc85cdbb6aa493418b832214dfef962, type: 2}
   m_SchemaSet:

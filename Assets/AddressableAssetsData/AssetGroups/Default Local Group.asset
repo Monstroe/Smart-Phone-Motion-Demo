@@ -14,13 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: d56ebd6d98f78f84aa2c10eec4d38a4a
-  m_SerializeEntries:
-  - m_GUID: 8a59da5f9cc413b42ac51b7f468f4597
-    m_Address: Assets/Samples/CNetworkingSolution (CNS)/1.0.0/Player Sample/FX/SFX/Footstep.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - CNS_SFX
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4dc85cdbb6aa493418b832214dfef962, type: 2}
   m_SchemaSet:
